@@ -1,0 +1,17 @@
+// reset file
+@import url(../SASS/base/_reset.scss);
+
+// font-family
+@import url('https://fonts.googleapis.com/css2?family=Akshar:wght@400;500&family=Cormorant+Garamond:wght@300&family=Lato:ital@1&family=Lexend:wght@300&family=Open+Sans:ital,wght@0,500;1,800&family=Roboto:ital,wght@0,400;1,900&family=Solway:wght@400;700&display=swap');
+
+//container
+@import url(../SASS/layout/_container.scss);
+
+// Navigation
+@import url(../SASS/layout/_nav.scss);
+
+//banner
+@import url(../SASS/layout/_banner.scss);
+
+//button
+@import url(../SASS/componends/_quote-btn.scss);

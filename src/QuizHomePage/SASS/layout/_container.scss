@@ -1,0 +1,22 @@
+.container {
+    background-image: url(../../../QuizHomePage/images/sport.jpg);
+    height: 100vh;
+    position: relative;
+    background-size: cover;
+    
+}
+
+.container::after {
+    position: absolute;
+    width: 40%;
+    content: "";
+    background-color: rgba(27, 47, 69, 1.0);
+    inset: 0;
+}
+
+.container::before {
+    position: absolute;
+    content: "";
+    background-color: rgba(27, 47, 69, 0.8);
+    inset: 0;
+}

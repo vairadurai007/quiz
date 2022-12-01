@@ -1,0 +1,35 @@
+.banner {
+    width: 50%;
+    margin: auto;
+    position: absolute;
+    position: fixed;
+    top: 34%;
+    left: 14%;
+    z-index: 1;
+    line-height: 9;
+
+    .sports-quote {
+        width: 60.33%;
+
+        &-heading {
+            font-size: 50px;
+            width: 70%;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #fff;
+            padding: 0px 0px 40px 0px;
+            letter-spacing: 3px;
+        }
+
+        &-lines {
+            color: #fff;
+            width: 60%;
+            border-left: 2px solid#0a7bb1;
+            padding: 0px 0px 0px 30px;
+            line-height: 23px;
+        }
+        &-span{
+            color: #0a7bb1;
+        }
+    }
+}
