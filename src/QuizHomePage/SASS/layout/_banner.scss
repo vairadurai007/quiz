@@ -31,5 +31,17 @@
         &-span{
             color: #0a7bb1;
         }
+
+        &-select-box{
+            padding: 11px 10px;
+            background-color:#0a7bb1;
+            font-size: 17px;
+            font-weight: 600;
+            margin-left:10px;
+            color: white;   
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+        }
     }
 }
