@@ -1,0 +1,80 @@
+.score-container{
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    background-image: url(../images/dark-blue-wallpaper-preview.jpg);
+    background-position: center;
+    background-size: cover;
+    color: aliceblue;
+
+    &-items {
+        width: 90%;
+        height: 500px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        border-radius: 5px;
+        background-color: rgba(27, 47, 69, 0.8);
+        letter-spacing: 2px;
+    }
+
+    &-current-score {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 180px;
+    }
+
+    &-quote{
+        font-size: 50px;
+        color: #0a7bb1;
+    }
+
+    &-score{
+        font-size: 40px;
+    }
+
+    &-footer {
+        width: 100%;
+        align-items: center;
+        gap:50px;
+        display: flex;
+        justify-content:center;
+    }
+
+    &-button {
+        padding: 15px 40px;
+        cursor: pointer;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: 700;
+        border:none;
+        background-color: #0a7bb1;
+        color: white;
+        letter-spacing: 2px;
+    }
+
+}
+
+.quiz-previous-score {
+    width: 100%;
+    font-size:50px;
+    letter-spacing: 2px;
+}
+.score-container-button:hover{
+    background-color: #02acfa;
+    color: black;
+}
+.previous-score{
+    color: #02acfa;
+    font-size:60px;
+}
+.current-score{
+    color: #0a7bb1;
+    font-size:50px;
+}

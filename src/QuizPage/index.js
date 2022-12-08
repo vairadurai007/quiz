@@ -1,89 +1,115 @@
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
 import './index.scss'
+import he from 'he'
+import { useNavigate } from "react-router-dom";
 
-export default function QuizPage({ quizData }) {
+export default function QuizPage(props) {
 
-    const [updatequestion, setUptateQuestionButton] = useState(false)
-    const [updateCorrectAnswer, setUpdateCorrectAnswer] = useState()
-    const [upateSelectOption, setUpateSelectOption] = useState()
+    const { quizData } = props;
+
+    const navigate = useNavigate()
+    const [isPreviousQuestion, setIsPreviousQuestion] = useState(false)
+    const [submitedAnswer, setSubmitedAnswer] = useState(false)
+    const [correctOption,setCorrectOption]=useState([])
+    const [selectedOption, setSelectedOption] = useState('')
+    const [correctAnswer, setCorrectAnswer] = useState('')
     const [questionIndex, setQuestionIndex] = useState(0)
-    const [options, setOptions] = useState([])
-    const [score, setScore] = useState(0)
+    const [isSelected, setIsSelected] = useState(false)
+    const [Options, setOptions] = useState([])
+    const [score, setScore] = useState([])
 
     useEffect(() => {
+        setOptions(quizData && [quizData[questionIndex].correct_answer,
+        ...quizData[questionIndex].incorrect_answers
+        ].sort(() => { return (Math.random() - 0.5) }))
 
-        shuffleOptions()
-        currectAnswer()
+        setCorrectAnswer(quizData && quizData[questionIndex].correct_answer);
 
-    }, [quizData, questionIndex])
+    }, [quizData, questionIndex, correctAnswer])
 
-    const shuffleOptions = () => {
-        setOptions(quizData && ([
-            quizData[questionIndex].correct_answer,
-            ...quizData[questionIndex].incorrect_answers
+    const handleNextQuestion = () => {
 
-        ].sort(() => { return (Math.random() - 0.5) })));
-    }
-
-    const currectAnswer = () => {
-        setUpdateCorrectAnswer(quizData && quizData[questionIndex].correct_answer);
-    }
-
-    const nextQuestion = () => {
-
-        if (questionIndex < 9  && upateSelectOption) {
+        if (questionIndex < 9 && isSelected) {
             setQuestionIndex(questionIndex + 1)
-            setUptateQuestionButton(true)
+            setIsPreviousQuestion(true)
+            setIsSelected(false)
 
-            if (upateSelectOption === updateCorrectAnswer) {
-                setScore(score + 1)
-                setUpdateCorrectAnswer('')
-                setUpateSelectOption('')
+            if (questionIndex === (quizData.length - 2) && isSelected) {
+                setSubmitedAnswer(true)
+            }
+            else {
+                setSubmitedAnswer(false)
+            }
+
+            if (selectedOption === correctAnswer) {
+                score.splice(questionIndex, 1, 1)
+                correctOption.splice(questionIndex,1,selectedOption)
+            }
+            else {
+                score.splice(questionIndex, 1, 0)
+                correctOption.splice(questionIndex,1,selectedOption)
             }
         }
     }
 
-    const previousQuestion = () => {
+    const handlePreviousQuestion = () => {
 
-        if (questionIndex >= 1 ) {
+        if (questionIndex >= 1) {
             setQuestionIndex(questionIndex - 1)
-            setUpateSelectOption('')
 
-            if (questionIndex === 1) {
-                setUptateQuestionButton(false)
-            }
         }
-        if (upateSelectOption === updateCorrectAnswer) {
-            setScore(score - 1)
-            setUpdateCorrectAnswer('')
-            setUpateSelectOption('')
+        if (quizData.length - 1) {
+            setSubmitedAnswer(false)
         }
-
+        if (questionIndex === ((quizData.length) - (quizData.length - 1))) {
+            setIsPreviousQuestion(false)
+        }
     }
 
-    const selectOption = (options, index) => {
-        setUpateSelectOption(options)
+    const questionOptions = (options) => {
+        setSelectedOption(options)
+        setIsSelected(true)
     }
 
+    const handleSubmit = () => {
+
+        if (selectedOption === correctAnswer) {
+            score.splice(questionIndex, 1, 1)
+            correctOption.splice(questionIndex,1,selectedOption)
+        }
+        else {
+            score.splice(questionIndex, 1, 0)
+            correctOption.splice(questionIndex,1,selectedOption)
+        }
+
+        const quizScore = score.reduce((a, b) => (a + b))
+        props.submitScore(quizScore)
+        props.selectedOption(correctOption)
+        props.updateQuizData(true)
+        setScore('')
+        setCorrectOption('')
+        navigate('/score')
+        localStorage.setItem('quizScore', JSON.stringify(quizScore))
+    }
 
     return (
         <div className="quiz-container">
 
             {
-                quizData ?
+                !!quizData ?
                     <div className="quiz-container-items">
 
                         <h1 className="quiz-container-question">
                             {(questionIndex + 1)}-{
-                                (quizData[questionIndex].question)}
+                                he.decode(quizData[questionIndex].question)}
                         </h1>
 
                         <div className="quiz-container-option-items">
                             {
-                                options && options.map((options, index) => {
+                                !!Options && Options.map((options, index) => {
                                     return (
                                         <ul key={index}>
-                                            <li onClick={() => selectOption(options, index)} className="quiz-container-option">{options} </li>
+                                            <button onClick={() => questionOptions(options)} className="quiz-container-option">{options} </button>
                                         </ul>
                                     )
                                 })
@@ -91,16 +117,22 @@ export default function QuizPage({ quizData }) {
                         </div>
 
                         <div className="quiz-container-buttons">
-                            {updatequestion && <button
-                                onClick={previousQuestion} className="quiz-container-previous-button">Previous
+                            {isPreviousQuestion && <button
+                                onClick={handlePreviousQuestion} className='quiz-container-previous-button'>Previous
                             </button>}
-                            <button
-                                onClick={nextQuestion} className="quiz-container-next-button">Next
-                            </button>
+
+                            {submitedAnswer ? <button
+                                onClick={handleSubmit} className="quiz-container-next-button">Submit
+                            </button> :
+
+                                <button
+                                    onClick={handleNextQuestion} className="quiz-container-next-button">Next
+                                </button>}
                         </div>
                     </div>
 
-                    : <div>...loading</div>
+                    : <div className="quiz-container-loading">Loading...</div>
+
             }
 
         </div>

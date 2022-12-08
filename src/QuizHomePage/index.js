@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import './MainSass/_index.scss'
-import { useState } from "react"
+import { Link } from 'react-router-dom';
 
 export default function QuizMainPage() {
 
@@ -19,8 +19,8 @@ export default function QuizMainPage() {
                     <div className='navigation'>
                         <ul className='navigation-list'>
                             <li>HOME</li>
-                            <li>ABOUT</li>
-                            <li>CONTACT</li>
+                            <Link to='/score'><li>SCORE</li></Link>
+                            <Link to='/review'><li>REVIEW</li></Link>
                         </ul>
                     </div>
                 </header>
