@@ -1,18 +1,51 @@
 import './Sass/index.scss'
+import he from 'he'
+import { useNavigate } from 'react-router-dom';
 
 function QuizReview(props) {
 
-const {quizData,correctOption,isCheaked}=props;
-
-console.log(quizData);
-console.log(correctOption);
+    const { quizData, correctOption, isCheacked } = props;
+    const navigate = useNavigate()
 
     return (
         <div className='review-container'>
+
             {
-                isCheaked ?
-                <div>hi</div>
-                :<div>No Data Found</div>
+                isCheacked ?
+                    <div className='review-container-items'>
+                        <h1 className='review-container-heading'>Questions Review</h1>
+                        {
+                            quizData.map((correctAnswer, index) => {
+                                return (
+                                    <ol className='review-container-list-items' key={correctAnswer.correct_answer}>
+                                        <li className='review-container-question'>
+                                            {index + 1}-{he.decode(correctAnswer.question)}
+                                        </li>
+                                        <li className='review-container-correct-answer'>
+                                            {correctAnswer.correct_answer}
+                                        </li>
+                                        {correctOption.map((selectOption) => {
+                                            return (
+                                                <li className='review-container-select-option'
+                                                    key={index}>
+                                                    <strike>
+                                                        {selectOption[index]}
+                                                    </strike>
+                                                </li>
+                                            )
+                                        })}
+                                    </ol>
+                                )
+                            })
+                        }
+                        <button
+                            onClick={() => { navigate('/score') }}
+                            className='review-container-back-option'>
+                            Goback
+                        </button>
+                    </div>
+                    :
+                    <div className='review-sub-container'>No Data Found</div>
             }
         </div>
     )

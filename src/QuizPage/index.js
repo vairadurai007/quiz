@@ -6,11 +6,10 @@ import { useNavigate } from "react-router-dom";
 export default function QuizPage(props) {
 
     const { quizData } = props;
-
     const navigate = useNavigate()
     const [isPreviousQuestion, setIsPreviousQuestion] = useState(false)
     const [submitedAnswer, setSubmitedAnswer] = useState(false)
-    const [correctOption,setCorrectOption]=useState([])
+    const [correctOption, setCorrectOption] = useState([])
     const [selectedOption, setSelectedOption] = useState('')
     const [correctAnswer, setCorrectAnswer] = useState('')
     const [questionIndex, setQuestionIndex] = useState(0)
@@ -19,22 +18,22 @@ export default function QuizPage(props) {
     const [score, setScore] = useState([])
 
     useEffect(() => {
-        setOptions(quizData && [quizData[questionIndex].correct_answer,
+        setOptions(!!quizData && [quizData[questionIndex].correct_answer,
         ...quizData[questionIndex].incorrect_answers
         ].sort(() => { return (Math.random() - 0.5) }))
 
-        setCorrectAnswer(quizData && quizData[questionIndex].correct_answer);
+        setCorrectAnswer(!!quizData && quizData[questionIndex].correct_answer);
 
     }, [quizData, questionIndex, correctAnswer])
 
     const handleNextQuestion = () => {
 
-        if (questionIndex < 9 && isSelected) {
+        if (questionIndex < (quizData.length - 1) && isSelected) {
             setQuestionIndex(questionIndex + 1)
             setIsPreviousQuestion(true)
             setIsSelected(false)
 
-            if (questionIndex === (quizData.length - 2) && isSelected) {
+            if (questionIndex === (quizData.length - 2)) {
                 setSubmitedAnswer(true)
             }
             else {
@@ -43,11 +42,11 @@ export default function QuizPage(props) {
 
             if (selectedOption === correctAnswer) {
                 score.splice(questionIndex, 1, 1)
-                correctOption.splice(questionIndex,1,selectedOption)
+                correctOption.splice(questionIndex, 1, '')
             }
             else {
                 score.splice(questionIndex, 1, 0)
-                correctOption.splice(questionIndex,1,selectedOption)
+                correctOption.splice(questionIndex, 1, selectedOption)
             }
         }
     }
@@ -56,7 +55,6 @@ export default function QuizPage(props) {
 
         if (questionIndex >= 1) {
             setQuestionIndex(questionIndex - 1)
-
         }
         if (quizData.length - 1) {
             setSubmitedAnswer(false)
@@ -75,11 +73,11 @@ export default function QuizPage(props) {
 
         if (selectedOption === correctAnswer) {
             score.splice(questionIndex, 1, 1)
-            correctOption.splice(questionIndex,1,selectedOption)
+            correctOption.splice(questionIndex, 1, '')
         }
         else {
             score.splice(questionIndex, 1, 0)
-            correctOption.splice(questionIndex,1,selectedOption)
+            correctOption.splice(questionIndex, 1, selectedOption)
         }
 
         const quizScore = score.reduce((a, b) => (a + b))
@@ -94,7 +92,6 @@ export default function QuizPage(props) {
 
     return (
         <div className="quiz-container">
-
             {
                 !!quizData ?
                     <div className="quiz-container-items">
@@ -109,7 +106,9 @@ export default function QuizPage(props) {
                                 !!Options && Options.map((options, index) => {
                                     return (
                                         <ul key={index}>
-                                            <button onClick={() => questionOptions(options)} className="quiz-container-option">{options} </button>
+                                            <button onClick={() => questionOptions(options)}
+                                                    className="quiz-container-option">{options}
+                                            </button>
                                         </ul>
                                     )
                                 })
@@ -117,21 +116,34 @@ export default function QuizPage(props) {
                         </div>
 
                         <div className="quiz-container-buttons">
-                            {isPreviousQuestion && <button
-                                onClick={handlePreviousQuestion} className='quiz-container-previous-button'>Previous
-                            </button>}
-
-                            {submitedAnswer ? <button
-                                onClick={handleSubmit} className="quiz-container-next-button">Submit
-                            </button> :
-
+                            {isPreviousQuestion &&
                                 <button
-                                    onClick={handleNextQuestion} className="quiz-container-next-button">Next
-                                </button>}
+                                    onClick={handlePreviousQuestion}
+                                    className='quiz-container-previous-button'
+                                >
+                                    Previous
+                                </button>
+                            }
+
+                            {submitedAnswer ?
+                                <button
+                                    onClick={handleSubmit}
+                                    className="quiz-container-next-button"
+                                >
+                                    Submit
+                                </button>
+                                :
+                                <button
+                                    onClick={handleNextQuestion}
+                                    className="quiz-container-next-button"
+                                >
+                                    Next
+                                </button>
+                            }
                         </div>
                     </div>
-
-                    : <div className="quiz-container-loading">Loading...</div>
+                    :
+                    <div className="quiz-container-loading">Loading...</div>
 
             }
 

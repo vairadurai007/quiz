@@ -9,10 +9,11 @@ import './App.css';
 
 function App() {
 
+  const QuestionAmount = 10;
   const [quizData, setQuizData] = useState(null)
   const [quizScore, setQuizScore] = useState(0)
   const [correctOption, setCorrectOption] = useState([])
-  const [isCheaked, setIsCheaked] = useState(false)
+  const [isCheacked, setIsCheacked] = useState(false)
 
   const submitScore = (quizScore) => {
     setQuizScore(quizScore)
@@ -23,44 +24,59 @@ function App() {
   }
 
   const updateQuizData = (isQuizData) => {
-    setIsCheaked(isQuizData)
+    setIsCheacked(isQuizData)
   }
 
-  const resetCheaked = (isCheak) => {
-    setIsCheaked(isCheak)
+  const resetCheacked = (isCheak) => {
+    setIsCheacked(isCheak)
   }
 
   useEffect(() => {
     FetchQuizData()
   }, [])
 
-  const QuestionAmount = 10;
-
   const FetchQuizData = async () => {
-    const value = await axios.get(`https://opentdb.com/api.php?amount=${QuestionAmount}&category=21&difficulty=hard&type=multiple`)
-    setQuizData(value.data.results)
+    const fetchData = await axios.get(`https://opentdb.com/api.php?amount=${QuestionAmount}&category=21&difficulty=hard&type=multiple`)
+    setQuizData(fetchData.data.results)
   }
 
   return (
     <div className="App">
       <Routes>
         <Route path='/' element={<QuizMainPage />} />
-        <Route path='/quiz-page'
-          element={<QuizPage
-            quizData={quizData}
-            selectedOption={selectedOption}
-            submitScore={submitScore}
-            updateQuizData={updateQuizData}
-          />} />
-        <Route path='/score' element={<QuizScore
-          quizScore={quizScore}
-          resetCheaked={resetCheaked}
-        />} />
-        <Route path='/review' element={<QuizReview
-          correctOption={correctOption}
-          quizData={quizData}
-          isCheaked={isCheaked}
-        />}
+
+        <Route
+          path='/quiz-page'
+          element={
+            <QuizPage
+              quizData={quizData}
+              selectedOption={selectedOption}
+              submitScore={submitScore}
+              updateQuizData={updateQuizData}
+            />
+          }
+        />
+
+        <Route
+          path='/score'
+          element={
+            <QuizScore
+              quizScore={quizScore}
+              resetCheacked={resetCheacked}
+              QuestionAmount={QuestionAmount}
+            />
+          }
+        />
+
+        <Route
+          path='/review'
+          element={
+            <QuizReview
+              correctOption={correctOption}
+              quizData={quizData}
+              isCheacked={isCheacked}
+            />
+          }
         />
       </Routes>
     </div>
