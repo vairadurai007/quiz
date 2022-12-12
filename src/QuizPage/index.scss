@@ -7,6 +7,12 @@
     font-family: 'Lexend', sans-serif;
 }
 
+$border-color: rgba(46, 127, 213, 0.9);
+$background-color: #0a7bb1;
+$white-color: white;
+$black-color: black;
+$rgba: rgba(27, 47, 69, 0.8);
+
 @import url('https://fonts.googleapis.com/css2?family=Akshar:wght@400;500&family=Cormorant+Garamond:wght@300&family=Lato:ital@1&family=Lexend:wght@300&family=Open+Sans:ital,wght@0,500;1,800&family=Roboto:ital,wght@0,400;1,900&family=Solway:wght@400;700&display=swap');
 
 .quiz-container {
@@ -23,31 +29,30 @@
         width: 60%;
         height: 700px;
         text-align: center;
-        background-color: rgba(27, 47, 69, 0.8);
+        background-color: $rgba;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
         border-radius: 5px;
 
     }
 
     &-question {
         width: 90%;
+        height: 170px;
         margin: auto;
         display: flex;
-        flex-wrap: wrap;
         font-weight: bold;
         justify-content: center;
-        color: rgb(255, 255, 255);
+        color: $white-color;
         line-height: 2;
         letter-spacing: 2px;
-        align-items: center;
     }
 
     &-option-items {
         width: 100%;
-        padding: 30px;
+        margin: auto;
+        width: 85%;
+        height: 200px;
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 70px;
@@ -55,12 +60,11 @@
 
     &-option {
         padding: 20px;
-        display: block;
         width: 100%;
         background: transparent;
         cursor: pointer;
-        border: 2px solid rgba(46, 127, 213, 0.9);
-        color: white;
+        border: 2px solid $border-color;
+        color: $white-color;
         font-size: 20px;
         font-weight: bold;
         letter-spacing: 2px;
@@ -74,45 +78,47 @@
         justify-content: space-evenly;
     }
 
-    &-previous-button {
-        padding: 15px 50px;
+    &-next-button {
+        height: 60px;
+        width: 20%;
         border-radius: 5px;
         background-color: transparent;
-        border: 2px solid rgba(46, 127, 213, 0.9);
-        color: white;
+        border: 2px solid $border-color;
+        color: $white-color;
         font-size: 20px;
         font-weight: bold;
         letter-spacing: 2px;
         cursor: pointer;
     }
 
-    &-next-button {
-        padding: 15px 70px;
+    &-false-button {
+        height: 60px;
+        width: 20%;
         border-radius: 5px;
         background-color: transparent;
-        border: 2px solid rgba(46, 127, 213, 0.9);
-        color: white;
+        border: 2px solid $border-color;
+        color: $white-color;
         font-size: 20px;
         font-weight: bold;
         letter-spacing: 2px;
         cursor: pointer;
+        opacity: 0.5;
     }
 
     &-loading {
-        color: white;
+        color: $white-color;
         font-size: 300px;
     }
 
     .quiz-container-option:focus {
-        background-color: #0a7bb1;
-        color: black;
-        border: none;
+        background-color: $background-color;
+        color: $black-color;
     }
 
     .quiz-container-next-button:active,
     .quiz-container-previous-button:active {
-        background-color: #0a7bb1;
-        border: 2px solid #0a7bb1;
+        background-color: $background-color;
+        color: $black-color;
     }
 
 }
@@ -125,7 +131,7 @@
     align-items: center;
     font-size: 40px;
     font-weight: 700;
-    color: white;
+    color: $white-color;
     letter-spacing: 5px;
-    background-color: black;
+    background-color: $black-color;
 }

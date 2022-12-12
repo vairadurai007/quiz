@@ -1,15 +1,22 @@
+$white-color:white;
+$black-color:black;
+$color:#0a7bb1;
+$hover-color: #17b6ffc9;
+
 .sports-quote-btn {
-    padding: 12px 30px;
-    background-color:#0a7bb1;
+    padding: 15px 30px;
+    background-color:$color;
     font-size: 17px;
     font-weight: 600;
-    color: white;
+    color:$white-color;
+    letter-spacing: 1px;
     border: none;
     border-radius: 50px;
     cursor: pointer;
 }
 
 .sports-quote-btn:hover {
-    background-color: #15aaf0c9;
+    background-color:$hover-color;
     transition: 0.3s;
+    color:$black-color;
 }

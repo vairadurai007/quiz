@@ -9,11 +9,11 @@ import './App.css';
 
 function App() {
 
-  const QuestionAmount = 10;
+  const questionAmount = 10;
   const [quizData, setQuizData] = useState(null)
   const [quizScore, setQuizScore] = useState(0)
   const [correctOption, setCorrectOption] = useState([])
-  const [isCheacked, setIsCheacked] = useState(false)
+  const [isChecked, setIsChecked] = useState(false)
 
   const submitScore = (quizScore) => {
     setQuizScore(quizScore)
@@ -24,11 +24,11 @@ function App() {
   }
 
   const updateQuizData = (isQuizData) => {
-    setIsCheacked(isQuizData)
+    setIsChecked(isQuizData)
   }
 
-  const resetCheacked = (isCheak) => {
-    setIsCheacked(isCheak)
+  const resetChecked = (isCheck) => {
+    setIsChecked(isCheck)
   }
 
   useEffect(() => {
@@ -36,7 +36,7 @@ function App() {
   }, [])
 
   const FetchQuizData = async () => {
-    const fetchData = await axios.get(`https://opentdb.com/api.php?amount=${QuestionAmount}&category=21&difficulty=hard&type=multiple`)
+    const fetchData = await axios.get(`https://opentdb.com/api.php?amount=${questionAmount}&category=21&difficulty=hard&type=multiple`)
     setQuizData(fetchData.data.results)
   }
 
@@ -62,8 +62,8 @@ function App() {
           element={
             <QuizScore
               quizScore={quizScore}
-              resetCheacked={resetCheacked}
-              QuestionAmount={QuestionAmount}
+              resetChecked={resetChecked}
+              questionAmount={questionAmount}
             />
           }
         />
@@ -74,7 +74,7 @@ function App() {
             <QuizReview
               correctOption={correctOption}
               quizData={quizData}
-              isCheacked={isCheacked}
+              isChecked={isChecked}
             />
           }
         />

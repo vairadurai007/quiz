@@ -1,8 +1,10 @@
+$white-color: white;
+$color: #0a7bb1;
+
 .banner {
     width: 50%;
     margin: auto;
     position: absolute;
-    position: fixed;
     top: 34%;
     left: 14%;
     z-index: 1;
@@ -16,32 +18,21 @@
             width: 70%;
             font-weight: 700;
             line-height: 1.2;
-            color: #fff;
+            color: $white-color;
             padding: 0px 0px 40px 0px;
             letter-spacing: 3px;
         }
 
         &-lines {
-            color: #fff;
+            color: $white-color;
             width: 60%;
-            border-left: 2px solid#0a7bb1;
+            border-left: 2px solid $color;
             padding: 0px 0px 0px 30px;
             line-height: 23px;
         }
-        &-span{
-            color: #0a7bb1;
-        }
 
-        &-select-box{
-            padding: 11px 10px;
-            background-color:#0a7bb1;
-            font-size: 17px;
-            font-weight: 600;
-            margin-left:10px;
-            color: white;   
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
+        &-span {
+            color: $color;
         }
     }
 }

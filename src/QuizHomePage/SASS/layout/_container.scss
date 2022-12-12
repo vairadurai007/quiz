@@ -1,22 +1,24 @@
+$after-color: rgba(27, 47, 69, 1.0);
+$before-color: rgba(27, 47, 69, 0.8);
+
 .container {
     background-image: url(../../../QuizHomePage/images/sport.jpg);
     height: 100vh;
     position: relative;
     background-size: cover;
-    
 }
 
 .container::after {
     position: absolute;
     width: 40%;
     content: "";
-    background-color: rgba(27, 47, 69, 1.0);
+    background-color: $after-color;
     inset: 0;
 }
 
 .container::before {
     position: absolute;
     content: "";
-    background-color: rgba(27, 47, 69, 0.8);
+    background-color: $before-color;
     inset: 0;
 }

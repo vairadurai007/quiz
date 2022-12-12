@@ -9,8 +9,8 @@ export default function QuizPage(props) {
     const navigate = useNavigate()
     const [isPreviousQuestion, setIsPreviousQuestion] = useState(false)
     const [submitedAnswer, setSubmitedAnswer] = useState(false)
-    const [correctOption, setCorrectOption] = useState([])
     const [selectedOption, setSelectedOption] = useState('')
+    const [correctOption, setCorrectOption] = useState([])
     const [correctAnswer, setCorrectAnswer] = useState('')
     const [questionIndex, setQuestionIndex] = useState(0)
     const [isSelected, setIsSelected] = useState(false)
@@ -32,22 +32,19 @@ export default function QuizPage(props) {
             setQuestionIndex(questionIndex + 1)
             setIsPreviousQuestion(true)
             setIsSelected(false)
+        }
 
-            if (questionIndex === (quizData.length - 2)) {
-                setSubmitedAnswer(true)
-            }
-            else {
-                setSubmitedAnswer(false)
-            }
+        if (questionIndex === (quizData.length - 2)) {
+            setSubmitedAnswer(true)
+        }
 
-            if (selectedOption === correctAnswer) {
-                score.splice(questionIndex, 1, 1)
-                correctOption.splice(questionIndex, 1, '')
-            }
-            else {
-                score.splice(questionIndex, 1, 0)
-                correctOption.splice(questionIndex, 1, selectedOption)
-            }
+        if (selectedOption === correctAnswer) {
+            score.splice(questionIndex, 1, 1)
+            correctOption.splice(questionIndex, 1, '')
+        }
+        else {
+            score.splice(questionIndex, 1, 0)
+            correctOption.splice(questionIndex, 1, selectedOption)
         }
     }
 
@@ -55,6 +52,7 @@ export default function QuizPage(props) {
 
         if (questionIndex >= 1) {
             setQuestionIndex(questionIndex - 1)
+            setIsSelected(false)
         }
         if (quizData.length - 1) {
             setSubmitedAnswer(false)
@@ -119,7 +117,7 @@ export default function QuizPage(props) {
                             {isPreviousQuestion &&
                                 <button
                                     onClick={handlePreviousQuestion}
-                                    className='quiz-container-previous-button'
+                                    className='quiz-container-next-button'
                                 >
                                     Previous
                                 </button>
@@ -128,14 +126,14 @@ export default function QuizPage(props) {
                             {submitedAnswer ?
                                 <button
                                     onClick={handleSubmit}
-                                    className="quiz-container-next-button"
+                                    className={`quiz-container-${isSelected ? 'next-button' : 'false-button'}`}
                                 >
                                     Submit
                                 </button>
                                 :
                                 <button
                                     onClick={handleNextQuestion}
-                                    className="quiz-container-next-button"
+                                    className={`quiz-container-${isSelected ? 'next-button' : 'false-button'}`}
                                 >
                                     Next
                                 </button>
